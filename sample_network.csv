@@ -1,0 +1,15 @@
+from,to,miles
+Chicago,Madison,147
+Madison,Minneapolis,270
+Chicago,Gary,30
+Gary,Indianapolis,155
+Gary,Toledo,215
+Toledo,Detroit,60
+Toledo,Columbus,145
+Indianapolis,Columbus,175
+Indianapolis,FortWayne,125
+FortWayne,Toledo,105
+Chicago,Bloomington,135
+Bloomington,StLouis,165
+Bloomington,Indianapolis,170
+Indianapolis,StLouis,243

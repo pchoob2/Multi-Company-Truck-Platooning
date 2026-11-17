@@ -1,0 +1,48 @@
+# ---------------------------------------------------------------------------
+# Configuration of the numerical experiments (Section 6)
+# ---------------------------------------------------------------------------
+network_file: network.csv             # columns: from,to,miles        (two-way segments)
+trips_file: trips.csv                 # columns: truck_id,origin,destination[,pref_departure_min]
+output_dir: results
+seed: 2026
+
+# --- trucks and time --------------------------------------------------------
+speed_mph: 60
+delta_min: 10                 # time step (minutes)
+day_start_min: 360            # preferred departures drawn in [06:00, 18:00] if
+day_end_min: 1080             #   the trips file has no pref_departure_min column
+departure_window_min: 30      # a truck may depart up to 30 min earlier or later
+arrival_slack_min: 30         # allowed lateness at destination
+
+# --- routes -----------------------------------------------------------------
+k_routes: 3                   # at most K shortest routes per truck
+rho: 0.05                     # routes at most 5% longer than the shortest route
+
+# --- benefits and costs -----------------------------------------------------
+fuel_cost_per_mile: 0.71      # $4.28 per gallon / 6.0 mpg
+saving_share:                 # per-truck saving as a share of fuel cost
+  2: 0.0725                   # two-truck platoon
+  3: 0.0783                   # three or more trucks
+platoon_cap: 5
+kappa_per_mile: 2.27          # cost of one extra mile of route ($)
+gamma_per_hour: 10.0          # cost of departing one hour off the preferred time
+
+# --- companies --------------------------------------------------------------
+entry_cost_max_per_truck: 3.0 # entry cost = U[0, 3] $ per truck (per day)
+entry_cost_levels: [0.5, 1.0, 2.0, 4.0, 6.0, 8.0]   # multipliers of the entry costs (1.0 = base level)
+instances_per_scenario: 10
+scenarios:                    # fleet sizes; each list must add up to the number of trucks
+  1: [360, 20, 20, 20, 20, 20, 20, 20]     # one dominant carrier and seven small ones
+  2: [400, 25, 25, 25, 25]
+  3: [250, 250]
+  4: [100, 100, 100, 100, 100]
+  5: [63, 63, 63, 63, 62, 62, 62, 62]      # eight equal carriers
+greedy_k: [3, 8]              # values of k for the Greedy mechanism (capped at the number of companies)
+
+# --- solver -----------------------------------------------------------------
+mip_time_limit_s: 300
+mip_rel_gap: 0.005            # each coalition value is within 0.5% of its optimum
+n_jobs: 1                     # parallel processes for the coalition values
+
+# Sentence inserted in Section 6 by make_section6.py. UPDATE it to describe the computer on which you ran the experiments.
+hardware_sentence: "The experiments were run on a computer with an Intel Xeon processor (2.10 GHz, two cores) and 8 GB of memory."
